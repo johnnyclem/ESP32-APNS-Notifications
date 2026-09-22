@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  linux-tests:
+    # The portable core (link state machine, device filter, ANCS wire codec)
+    # builds and tests without a Mac. The CoreBluetooth and UserNotifications
+    # adapters compile empty on Linux (#if canImport).
+    runs-on: ubuntu-24.04
+    container: swift:6.1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: swift test
